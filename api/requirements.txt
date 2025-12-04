@@ -1,6 +1,8 @@
-asgiref==3.11.0
-Django==6.0
-django-cors-headers==4.9.0
-djangorestframework==3.16.1
-sqlparse==0.5.4
-tzdata==2025.2
+Django
+djangorestframework
+django-cors-headers
+gunicorn
+whitenoise[brotli]
+psycopg2-binary
+dj-database-url
+python-dotenv

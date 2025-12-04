@@ -1,0 +1,52 @@
+services:
+  # Serviço do Banco de Dados PostgreSQL
+  - type: pserv
+    name: inventory-db
+    plan: free # ou starter
+    databaseName: inventory_db
+    user: inventory_user
+    # A variável de ambiente POSTGRES_PASSWORD será gerada automaticamente
+
+  # Serviço do Backend (API Django)
+  - type: web
+    name: inventory-backend
+    plan: free # ou starter
+    runtime: python
+    repo: https://github.com/SEU_USUARIO/SEU_REPOSITORIO # <-- MUDE AQUI
+    branch: main # ou a branch que você usa
+    rootDir: ./api
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn api.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: inventory-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true # Render irá gerar uma chave segura
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: .onrender.com # Permite acesso de qualquer subdomínio do Render
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: inventory-frontend
+          property: url
+
+  # Serviço do Frontend (React/Vite)
+  - type: web
+    name: inventory-frontend
+    plan: free # ou starter
+    runtime: node
+    repo: https://github.com/SEU_USUARIO/SEU_REPOSITORIO # <-- MUDE AQUI
+    branch: main # ou a branch que você usa
+    rootDir: ./frontend
+    buildCommand: "npm install && npm run build"
+    startCommand: "npx serve -s dist" # Assumindo que você usa 'serve' para servir os arquivos estáticos
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: inventory-backend
+          property: url
