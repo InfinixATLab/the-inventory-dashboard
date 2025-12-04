@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import type { Product } from "../models/Product";
 import { api } from "../services/api";
 import { ProductCard } from "../components/ProductCard";
+import { Modal } from "../components/Modal";
+import { ProductForm } from "../components/ProductForm";
 
 
 
 export const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [showForm, setShowForm] = useState(false)
 
   const fetchProducts = async () => {
     try {
@@ -29,8 +32,9 @@ export const Home = () => {
     <div className="p-4">
       <header className="bg-orange-500 text-white p-4 rounded mb-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Inventório Produtos</h1>
-        <button
+        <button onClick={() => setShowForm(true)}
           className="bg-white text-orange-500 px-4 py-2 rounded hover:bg-gray-100 transition"
+          
         >
           Adicionar Produto
         </button>
@@ -45,6 +49,12 @@ export const Home = () => {
 
         {products.length <= 0 && <h1> Sem Produtos Armazenados</h1>}
       </main>
+
+      {showForm && (
+        <Modal onClose={() => setShowForm(false)}>
+          <ProductForm onClose={() => setShowForm(false)} onSaved={fetchProducts}/>
+        </Modal>
+      )}
 
     </div>
   );
