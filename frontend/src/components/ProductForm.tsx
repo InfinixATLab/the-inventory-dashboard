@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import type { Product } from '../types/Product';
 
 interface ProductFormProps {
   onProductCreated: (newProduct: Product) => void;
 }
+interface Category {
+  id: number;
+  name: string;
+}
 
 const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [inStock, setInStock] = useState(true);
+  // Bônus: Estado para armazenar as categorias buscadas da API
+  const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,12 +57,34 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
     }
   };
 
+  // Bônus: Busca as categorias quando o componente é montado
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await api.get<Category[]>('categories/');
+        setCategories(response.data);
+      } catch (err) {
+        console.error('Falha ao buscar categorias:', err);
+        // Opcional: notificar o usuário sobre o erro
+        setError('Não foi possível carregar as categorias.');
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md mb-8">
       <h2 className="text-2xl font-semibold mb-4">Criar Novo Produto</h2>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <input type="text" placeholder="Nome do Produto" value={name} onChange={e => setName(e.target.value)} className="p-2 border rounded col-span-1 md:col-span-2" />
         <input type="number" placeholder="Preço" value={price} onChange={e => setPrice(e.target.value)} className="p-2 border rounded" />
+        <select value={categoryId} onChange={e => setCategoryId(e.target.value)} className="p-2 border rounded">
+          <option value="" disabled>Selecione uma categoria</option>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>{category.name}</option>
+          ))}
+        </select>
       </div>
       <div className="flex items-center justify-between mt-4">
         <label className="flex items-center">
@@ -73,4 +101,3 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
 };
 
 export default ProductForm;
-
