@@ -21,3 +21,9 @@ export type ProductAction =
   | { type: "PRODUCT_FETCH_INIT" }
   | { type: "PRODUCT_FETCH_SUCCESS"; payload: Product[] }
   | { type: "PRODUCT_FETCH_FAILURE" };
+
+export interface CategoryState {
+  data: Category[];
+  isLoading: boolean;
+  isError: boolean;
+}
