@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Local ou em produção
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
 
 export const api = axios.create({
@@ -10,10 +9,16 @@ export const api = axios.create({
     },
 });
 
+export interface Category {
+    id: number;
+    name: string;
+}
+
 export interface Product {
     id: number;
     name: string;
-    price: string; 
+    price: string;
     in_stock: boolean;
-    category_name?: string;
+    category?: number;      
+    category_name?: string; 
 }
