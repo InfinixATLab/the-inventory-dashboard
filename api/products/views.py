@@ -9,6 +9,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
