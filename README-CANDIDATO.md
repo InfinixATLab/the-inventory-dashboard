@@ -192,7 +192,3 @@ Se tivesse mais tempo, eu:
 
 No momento, o projeto roda apenas localmente. Via docker ou terminais separados.
 
-**Recomendações e observações sobre o desafio**
-===============================================
-
--   API (DRF): O serializador de Product deve exibir o nome da **categoria**, não apenas seu ID. Não fica implícito o que "categoria" deveria ser ou onde deveria estar ou ser criada.
