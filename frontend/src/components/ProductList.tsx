@@ -17,10 +17,9 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
           <div>
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-bold text-gray-800">{product.name}</h3>
-              <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {product.inStock ? 'Disponível' : 'Indisponível'}
+              <span className={`px-2 py-1 text-xs font-semibold rounded-full ${product.in_stock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
+                {product.in_stock ? 'Disponível' : 'Indisponível'}
               </span>
             </div>
           </div>
@@ -31,3 +30,4 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
   );
 };
 
+export default ProductList;
