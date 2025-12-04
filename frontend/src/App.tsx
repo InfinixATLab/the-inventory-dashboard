@@ -27,18 +27,21 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
+        <div className="py-6 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Painel de Inventário
+          </h1>
+        </div>
       </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <ProductForm onProductCreated={handleProductCreated} />
+      <main className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="space-y-8">
+          <ProductForm onProductCreated={handleProductCreated} />
 
-            {loading && <p className="text-center text-gray-500">Carregando produtos...</p>}
-            {error && <p className="text-center text-red-500">{error}</p>}
-            {!loading && !error && <ProductList products={products} />}
-          </div>
+          {loading && <p className="text-center text-gray-500">Carregando produtos...</p>}
+          {error && <p className="text-center text-red-500">{error}</p>}
+          {!loading && !error && <ProductList products={products} />}
         </div>
       </main>
     </div>

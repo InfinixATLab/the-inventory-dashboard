@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import api from '../services/api';
 import type { Product } from '../types/Product';
-
-interface Category {
-  id: number;
-  name: string;
-}
 
 interface ProductFormProps {
   onProductCreated: (newProduct: Product) => void;
@@ -16,20 +11,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
   const [price, setPrice] = useState('');
   const [inStock, setInStock] = useState(true);
   const [categoryId, setCategoryId] = useState<string>('');
-  const [categories, setCategories] = useState<Category[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    // Busca as categorias para popular o dropdown
-    api.get<Category[]>('categories/')
-      .then(response => {
-        setCategories(response.data);
-      })
-      .catch(() => {
-        setError('Não foi possível carregar as categorias.');
-      });
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,12 +57,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <input type="text" placeholder="Nome do Produto" value={name} onChange={e => setName(e.target.value)} className="p-2 border rounded col-span-1 md:col-span-2" />
         <input type="number" placeholder="Preço" value={price} onChange={e => setPrice(e.target.value)} className="p-2 border rounded" />
-        <select value={categoryId} onChange={e => setCategoryId(e.target.value)} className="p-2 border rounded">
-          <option value="" disabled>Selecione a Categoria</option>
-          {categories.map(cat => (
-            <option key={cat.id} value={cat.id}>{cat.name}</option>
-          ))}
-        </select>
       </div>
       <div className="flex items-center justify-between mt-4">
         <label className="flex items-center">
