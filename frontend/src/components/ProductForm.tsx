@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Product } from "../models/Product"; 
 import { api } from "../services/api";
 import { Loader } from "./Loader";
+import toast from "react-hot-toast";
 
 export const ProductForm = ({onClose, onSaved}:{onClose:()=>void,onSaved:()=>void}) => {
 
@@ -15,30 +16,33 @@ export const ProductForm = ({onClose, onSaved}:{onClose:()=>void,onSaved:()=>voi
     });
 
     const SubmitData = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
+    e.preventDefault();
 
-        if (!productData.name || !productData.category || productData.price <= 0) {
-        alert("Não são permitidos campos vazios ou preço abaixo de 0");
-        return;
-        }else if(String(productData.price).length > 8){
-        alert("Preço não pode conter muitos números");
-        return;
-        }
+    if (!productData.name || !productData.category || productData.price <= 0) {
+      toast.error("Não são permitidos campos vazios ou preço abaixo de 0");
+      return;
+    }else if(String(productData.price).length > 8){
+      toast.error("Preço não pode conter muitos números");
+      return;
+    }
 
-        try {
-            await api.post("produto/", productData);
-            alert('Produto Craido com sucesso')
-            setIsLoading(false);
-            onSaved();
-            onClose();
-        
-        } catch (error) {
-            setIsLoading(false);
-            console.error(error);
-            alert('erro ao salvar produto')
-        }
-    };
+
+    try {
+      setIsLoading(true);
+      
+      await api.post("produto/", productData);
+      setIsLoading(false);
+      toast.success('Produto Craido com sucesso')
+      
+      onSaved();
+      onClose();
+    
+    } catch (error) {
+      console.error(error);
+      toast.error('erro ao salvar produto')
+      setIsLoading(false);
+    }
+  };
 
   return (
     <form onSubmit={SubmitData} className="flex flex-col gap-4">

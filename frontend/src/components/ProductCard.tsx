@@ -1,7 +1,21 @@
+import toast from "react-hot-toast";
 import type { Product } from "../models/Product";
+import { api } from "../services/api";
 
 
-export const ProductCard = ({ product } : {product:Product}) => {
+export const ProductCard = ({ product , onDelete} : {product:Product, onDelete:()=>void}) => {
+
+    const deleteProduct = async () =>{
+    try{
+      await api.delete(`produto/${product?.id}/`);
+      toast.success("Produto Excluido com sucesso!");
+      onDelete();
+    }
+    catch(err){
+      console.log(err)
+      toast.error("Erro ao deletar produto");
+    }
+  }
 
   return (
     <>
@@ -11,6 +25,9 @@ export const ProductCard = ({ product } : {product:Product}) => {
             product.in_stock ? "bg-green-500" : "bg-red-500"}`}>
             {product.in_stock ? "Em Estoque" : "Sem Estoque"}
           </span>
+          <button className="bg-gray-300 size-6 rounded hover:bg-gray-200 transition" onClick={deleteProduct}>
+            <img src="http://cdn-icons-png.flaticon.com/512/3405/3405244.png" alt="" width={50}/>
+          </button>
         </div>
         
         
