@@ -12,7 +12,7 @@ services:
     name: inventory-backend
     plan: free # ou starter
     runtime: python
-    repo: https://github.com/SEU_USUARIO/SEU_REPOSITORIO # <-- MUDE AQUI
+    repo: https://github.com/ludson96/the-inventory-dashboard
     branch: main # ou a branch que você usa
     rootDir: ./api
     buildCommand: "./build.sh"
@@ -39,7 +39,7 @@ services:
     name: inventory-frontend
     plan: free # ou starter
     runtime: node
-    repo: https://github.com/SEU_USUARIO/SEU_REPOSITORIO # <-- MUDE AQUI
+    repo: https://github.com/ludson96/the-inventory-dashboard
     branch: main # ou a branch que você usa
     rootDir: ./frontend
     buildCommand: "npm install && npm run build"
