@@ -16,6 +16,11 @@ export const ProductForm = ({ categories, onProductCreated }: ProductFormProps) 
   const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handlePriceChange = (value: string) => {
+    const cleaned = value.replace(/[^\d.,]/g, "");
+    setPrice(cleaned);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!categoryId) return;
@@ -33,6 +38,7 @@ export const ProductForm = ({ categories, onProductCreated }: ProductFormProps) 
       const response = await createProduct(newProduct);
       onProductCreated(response.data);
 
+      // Limpa formulário
       setName("");
       setPrice("");
       setInStock(true);
@@ -43,11 +49,6 @@ export const ProductForm = ({ categories, onProductCreated }: ProductFormProps) 
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handlePriceChange = (value: string) => {
-    const cleaned = value.replace(/[^\d,]/g, "");
-    setPrice(cleaned);
   };
 
   return (
