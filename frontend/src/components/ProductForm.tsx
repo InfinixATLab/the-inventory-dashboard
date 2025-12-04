@@ -14,7 +14,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [inStock, setInStock] = useState(true);
-  // Bônus: Estado para armazenar as categorias buscadas da API
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -39,16 +38,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
       };
 
       const response = await api.post<Product>('products/', newProductData);
-      onProductCreated(response.data); // Atualiza a lista no componente pai
+      onProductCreated(response.data); 
 
-      // Limpa o formulário
       setName('');
       setPrice('');
       setInStock(true);
       setCategoryId('');
 
     } catch (err: any) {
-      // Bônus: Exibe erro de validação do backend
       const backendError = err.response?.data?.price?.[0] || 'Falha ao criar o produto.';
       setError(backendError);
       console.error(err);
@@ -57,7 +54,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
     }
   };
 
-  // Bônus: Busca as categorias quando o componente é montado
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -65,7 +61,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ onProductCreated }) => {
         setCategories(response.data);
       } catch (err) {
         console.error('Falha ao buscar categorias:', err);
-        // Opcional: notificar o usuário sobre o erro
         setError('Não foi possível carregar as categorias.');
       }
     };
