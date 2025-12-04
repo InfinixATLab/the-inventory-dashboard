@@ -1,66 +1,66 @@
-* IMPORTANTE: Não inicie este desafio sem autorização. O desafio só poderá ser iniciado no dia e horário agendado via Google Meet. Entre em contato via email ou whatsapp:
-  - administrativo@infinixassessoria.com.br
-  - (21) 99515-2411
-
 # THE INVENTORY DASHBOARD
 
-## Sobre
-**Stack**: Python + Django + DRF + SQlite + React + TailwindCSS + Axios + TypeScript
-**Escopo**: Site completo para criação e listagem de produtos.
-
-## Requisitos Essenciais (Timebox 4h)
-
-#### Backend
-
-1. Configuração Inicial: Crie um app **products**, e defina o modelo Product com os campos:
-    - name: CharField
-    - price: Float (2 decimal fields)
-    - in_stock (boolean)
-2. Configure **CORS**. O backend deve aceitar requisições do localhost.
-3. API (DRF):
-    - Defina *serializers* para *Product*.
-    - O serializador de *Product* deve exibir o nome da categoria, não apenas seu ID.
-    - Use **ViewSets** para fornercer funcionalidade CRUD completa para *Product*.
-    - Configure urls.
-
-#### Frontend
-1. Listagem: Ao carregar a página, buscar os pordutos e exibí-los em cards simples (Nome, Preço e um "badge" verde/vermelho para estoque).
-2. Criação: Um formulário simples acima da lista com inputs para Nome, Preço e um Checkbox para Estoque.
-3. Atualização (Tela de Criação): Ao salvar o produto com sucesso, a lista deve ser atualizada ( seja via novo fetch ou adicionando ao estado local).
-
-#### Git
-O desafio exige que *ambos* os servidores rodem simultaneamente. O README-CANDIDATO.md deve explicar como rodar o projeto. (Ex: "Abra dois terminais...").
-
-#### Bônus (Desejáveis):
-    - Docker Compose: Um arquivo docker-compose.yml que sobe o banco, o back e o front com um comando.
-    - Validação de Erro: Se o backend recusar o produto (ex: preço negativo), o frontend deve mostrar um toast ou mensagem de erro vermelha, não apenas falhar silenciosamente.
-
-# Rubrica de Avaliação
-
-| Dimensão Avaliada                        | Peso  | Pontuação (1-5) | Descrição da Avaliação (O que procurar)                                                                                                                                                                                                 |
-|------------------------------------------|-------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **1. Funcionalidade (Requisitos Essenciais)** | 40%  | [1-5]           | **5 (Excelente):** Cumpriu 100% dos requisitos essenciais. A aplicação roda de primeira, sem bugs óbvios. Trata estados de loading/error.<br>**3 (Satisfatório):** Cumpriu a maioria (80%+) dos requisitos. Funcionalidade principal funciona, mas com bugs menores.<br>**1 (Inaceitável):** Não roda ou a funcionalidade principal está quebrada. O avaliador não consegue testar a solução. |
-| **2. Qualidade de Código e Estrutura**       | 25%  | [1-5]           | **5 (Excelente):** Código limpo, legível e idiomático. Segue princípios (ex: DRY). Estrutura de pastas lógica e escalável. Tipagem (TS) útil e precisa. Separação clara de responsabilidades.<br>**3 (Satisfatório):** Código funciona, mas com repetição ou "code smells". Estrutura de pastas aceitável, mas confusa. Tipagem usada com alguns `any`.<br>**1 (Inaceitável):** "Código espaguete". Variáveis ruins. Lógica de negócio misturada com UI. "Sopa de arquivos" na raiz. |
-| **3. Processo e Comunicação (Git & README)** | 25%  | [1-5]           | **5 (Excelente):** Commits atômicos, frequentes e bem descritos. PR bem escrito. README completo com setup e explicações de design.<br>**3 (Satisfatório):** Usa Git, mas commits grandes (ex: "implementa home e função de agendar tarefas e remove var desnecessária"). README mínimo com instruções básicas.<br>**1 (Inaceitável):** Um único commit ("final"). Nenhum README ou instruções. Demonstra falta de profissionalismo e comunicação. |
-| **4. Bônus e Resolução de Problemas**        | 10%  | [1-5]           | **5 (Excelente):** Implementou requisitos bônus funcionando. README explica como utilizar.<br>**3 (Satisfatório):** Tentou implementar bônus, mas não funcionou. README explica falha e plano.<br>**1 (Inaceitável):** Ignorou bônus ou implementou com falhas e sem explicação no README. |
-
-## Instruções sobre "README-CANDIDATO" (Timebox 30min):
-Preencha este arquivo com informações claras e concisas, separadas pelas seguintes seções:
-
 #### Seção 1: Instruções para rodar
-- Quais variáveis de ambiente são necessárias?
-- Como instalar dependências?
-- Como rodar o projeto?
+Não são necessárias variáveis de ambiente para a execução local.
+
+**Opção 1: Rodando Localmente (Sem Docker)**
+
+1.  **Instalar Dependências:**
+    *   **Backend (API):** Navegue até a pasta `api` e instale as dependências Python.
+        ```bash
+        cd api
+        pip install -r requirements.txt
+        ```
+    *   **Frontend:** Navegue até a pasta `frontend` e instale as dependências Node.js.
+        ```bash
+        cd frontend
+        npm install
+        ```
+
+2.  **Rodar o Projeto:**
+    *   **Backend (API):** Na pasta `api`, aplique as migrações e inicie o servidor Django.
+        ```bash
+        # Dentro da pasta /api
+        python manage.py migrate
+        python manage.py runserver
+        ```
+        O backend estará disponível em `http://localhost:8000`. Mantenha esse terminal aberto.
+
+    *   **Frontend:** Abra um novo terminal, vá para a pasta `frontend` e inicie o servidor de desenvolvimento Vite.
+        ```bash
+        # Dentro da pasta /frontend
+        npm run dev
+        ```
+        O frontend estará disponível em `http://localhost:5173`.
 
 #### Seção 2: Decisões de design
-- Qual foi a maior dificuldade que você encontrou e como superou?
-- O que você não teve tempo de fazer (dentro do timebox) e como você faria se tivesse mais tempo?
+*   **Qual foi a maior dificuldade que você encontrou e como superou?**
+    A principal dificuldade foi a integração full-stack para a funcionalidade de "Categorias", especialmente por ser um primeiro contato mais aprofundado com Django/DRF. Superei isso dividindo o problema: primeiro, foquei em criar o endpoint da API no backend para expor as categorias. Em seguida, no frontend, implementei a chamada a essa API com `useEffect` para buscar os dados e popular dinamicamente o campo de seleção no formulário, garantindo a comunicação correta entre as duas partes da aplicação.
+
+*   **O que você não teve tempo de fazer e como você faria se tivesse mais tempo?**
+    Dado o tempo, foquei no fluxo principal de criação e listagem. Com mais tempo, eu implementaria:
+    1. **Deploy:**  Não deu tempo de fazer o deploy, comecei a fazer o backend pelo render, mas acabou não dando tempo.
+    2.  **Edição e Exclusão de Produtos:** Adicionaria botões de "Editar" e "Excluir" em cada card de produto, criando os respectivos modais/páginas e endpoints na API para as operações de `UPDATE` e `DELETE`.
+    3.  **Validação de Formulário Avançada:** Substituiria a validação manual por uma biblioteca como `Zod` ou `React Hook Form` para fornecer feedback de erro por campo e regras mais complexas (ex: preço mínimo).
+    4.  **Feedback ao Usuário (Toasts):** Integraria uma biblioteca como `react-toastify` para exibir notificações de sucesso ou erro de forma mais elegante após o envio do formulário, em vez de apenas texto estático.
+    4.  **Paginação:** Na listagem de produtos, implementaria a paginação no backend (usando a paginação do Django REST Framework) e no frontend para lidar com grandes volumes de dados de forma eficiente.
 
 #### Seção 3: Link para Deploy (Bônus)
-- Cole aqui o link do projeto hospedado ou instrua como rodar via Docker.
+O projeto está totalmente containerizado com Docker, facilitando a execução em qualquer ambiente.
+
+**Opção 2: Rodando com Docker**
+
+1.  **Pré-requisito:** Ter o Docker e o Docker Compose instalados.
+
+2.  **Rodar com Docker Compose:** No terminal, na raiz do projeto, execute o comando:
+    ```bash
+    docker-compose up --build
+    ```
+    O Docker irá construir as imagens e iniciar os contêineres. O frontend estará acessível em `http://localhost:5173` e o backend em `http://localhost:8000`.
 
 #### Seção final: Recomendações
-- Escreva aqui dicas, melhorias e recomendações sobre este desafio.
+Este é um excelente desafio para avaliar habilidades full-stack em um contexto prático. Algumas sugestões para futuras versões:
 
-## Considerações finais:
-Este desafio não foi pensado para encontrar quem o finaliza 100% ou quem o termina mais rápido. Estamos buscando um desenvolvedor sério, que saiba como desenvolver soluções mesmo que para apenas 50% do projeto. Não queremos nenhum dev que dependa 100% de IA ou de terceiros, mas sim aquele que sabe priorizar, desenvolver e pesquisar.
+*   **Testes:** Incluir um requisito para a escrita de testes unitários (ex: para um helper de formatação no frontend ou para um `serializer` no backend) e/ou testes de integração (ex: testar a criação de um produto via API) para avaliar a qualidade e a robustez do código.
+*   **Complexidade do Modelo:** Adicionar um relacionamento `ManyToMany` (ex: `Tags`) ao modelo `Product` para testar o conhecimento do candidato em cenários de dados mais complexos.
+*   **Clareza nos Requisitos:** Para funcionalidades que envolvem relacionamentos entre dados (como Produtos e Categorias), seria útil detalhar um pouco mais os endpoints de API esperados ou fornecer um mini-diagrama do modelo de dados. Isso ajudaria a alinhar as expectativas sobre a implementação.
