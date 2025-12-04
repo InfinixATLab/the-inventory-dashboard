@@ -1,39 +1,44 @@
 import { useState } from "react";
 import type { Product } from "../models/Product"; 
 import { api } from "../services/api";
+import { Loader } from "./Loader";
 
 export const ProductForm = ({onClose, onSaved}:{onClose:()=>void,onSaved:()=>void}) => {
 
-  const [productData, setProductData] = useState<Omit<Product, "id">>({
-    name: "",
-    price:  0,
-    in_stock:  true,
-    category: "",
-  });
+    const [isLoading, setIsLoading] = useState(false);
 
-  const SubmitData = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const [productData, setProductData] = useState<Omit<Product, "id">>({
+        name: "",
+        price:  0,
+        in_stock:  true,
+        category: "",
+    });
 
-    if (!productData.name || !productData.category || productData.price <= 0) {
-      alert("Não são permitidos campos vazios ou preço abaixo de 0");
-      return;
-    }else if(String(productData.price).length > 8){
-      alert("Preço não pode conter muitos números");
-      return;
-    }
+    const SubmitData = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
 
-    try {
-        await api.post("produto/", productData);
-        alert('Produto Craido com sucesso')
-      
-        onSaved();
-        onClose();
-    
-    } catch (error) {
-      console.error(error);
-      alert('erro ao salvar produto')
-    }
-  };
+        if (!productData.name || !productData.category || productData.price <= 0) {
+        alert("Não são permitidos campos vazios ou preço abaixo de 0");
+        return;
+        }else if(String(productData.price).length > 8){
+        alert("Preço não pode conter muitos números");
+        return;
+        }
+
+        try {
+            await api.post("produto/", productData);
+            alert('Produto Craido com sucesso')
+            setIsLoading(false);
+            onSaved();
+            onClose();
+        
+        } catch (error) {
+            setIsLoading(false);
+            console.error(error);
+            alert('erro ao salvar produto')
+        }
+    };
 
   return (
     <form onSubmit={SubmitData} className="flex flex-col gap-4">
@@ -68,7 +73,7 @@ export const ProductForm = ({onClose, onSaved}:{onClose:()=>void,onSaved:()=>voi
       <button type="submit"
         className="bg-orange-500 text-white py-2 rounded hover:bg-orange-600 transition"
       >
-       Criar Produto
+       {isLoading ? <Loader /> : "Salvar Alterações"}
       </button>
     </form>
   );
