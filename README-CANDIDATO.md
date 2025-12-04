@@ -35,6 +35,9 @@ Stack utilizada:
 
 ```
     git clone <Link do repositório>
+        #ou
+    git clone -b <nome da branch> <Link do repositorio> # caso os arquivos sejam da branch errada
+    
     cd <Pasta do projeto>
 ```
 
