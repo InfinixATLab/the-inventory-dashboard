@@ -1,3 +1,4 @@
+
 export const Modal = ({ children, onClose }:{children:React.ReactNode,onClose:()=>void}) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">

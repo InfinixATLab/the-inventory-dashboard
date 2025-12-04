@@ -1,11 +1,18 @@
-import toast from "react-hot-toast";
 import type { Product } from "../models/Product";
 import { api } from "../services/api";
 
+import toast from "react-hot-toast";
 
-export const ProductCard = ({ product , onDelete} : {product:Product, onDelete:()=>void}) => {
+import { ProductForm } from "./ProductForm";
+import { Modal } from "./Modal";
+import { useState } from "react";
 
-    const deleteProduct = async () =>{
+
+export const ProductCard = ({ product, onDelete,onUpdated} : {product:Product , onDelete:()=> void,onUpdated: () => void}) => {
+
+  const [showForm, setShowForm] = useState(false);
+
+  const deleteProduct = async () =>{
     try{
       await api.delete(`produto/${product?.id}/`);
       toast.success("Produto Excluido com sucesso!");
@@ -29,13 +36,16 @@ export const ProductCard = ({ product , onDelete} : {product:Product, onDelete:(
             <img src="http://cdn-icons-png.flaticon.com/512/3405/3405244.png" alt="" width={50}/>
           </button>
         </div>
-        
-        
-        <p className="mt-3 font-medium cursor-pointer">{product.name}</p>
-        <p className="text-orange-500 text-lg font-bold cursor-pointer">R$ {product.price}</p>
+          
+        <p className="mt-3 font-medium cursor-pointer" onClick={() => setShowForm(true)}>{product.name}</p>
+        <p className="text-orange-500 text-lg font-bold cursor-pointer" onClick={() => setShowForm(true)}>R$ {product.price}</p>
         <p className="text-gray-500 text-sm mt-1">{product.category}</p>
-
       </div>
+      {showForm && (
+        <Modal onClose={() => setShowForm(false)}>
+          <ProductForm product={product} onClose={() => setShowForm(false)} onSaved={onUpdated}/>
+        </Modal>
+      )}
     </>
   );
 };
