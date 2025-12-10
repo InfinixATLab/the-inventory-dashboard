@@ -1,0 +1,21 @@
+
+services:
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: bash -c "python manage.py migrate --noinput && gunicorn api.wsgi:application --bind 0.0.0.0:8000 --workers 1"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend

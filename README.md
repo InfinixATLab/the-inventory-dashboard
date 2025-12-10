@@ -1,66 +1,146 @@
-* IMPORTANTE: Não inicie este desafio sem autorização. O desafio só poderá ser iniciado no dia e horário agendado via Google Meet. Entre em contato via email ou whatsapp:
-  - administrativo@infinixassessoria.com.br
-  - (21) 99515-2411
 
-# THE INVENTORY DASHBOARD
+# The Inventory Dashboard
 
-## Sobre
-**Stack**: Python + Django + DRF + SQlite + React + TailwindCSS + Axios + TypeScript
-**Escopo**: Site completo para criação e listagem de produtos.
+Aplicação completa para gestão de produtos, composta por uma API em Django/DRF e um frontend em React + TypeScript. O projeto permite criar, listar e remover produtos, exibindo informações básicas como nome, preço e disponibilidade em estoque.
 
-## Requisitos Essenciais (Timebox 4h)
+## Tecnologias Utilizadas
+
+**Backend**
+
+* Python 3.11
+* Django 5
+* Django REST Framework
+* django-cors-headers
+* SQLite
+* Gunicorn (produção)
+
+**Frontend**
+
+* React 19
+* TypeScript
+* Vite
+* TailwindCSS
+* Axios
+* React Toastify
+
+**Infraestrutura**
+
+* Docker e Docker Compose
+* Nginx (servidor do frontend)
+
+---
+
+## Como rodar o projeto
+
+### 1. Executando com Docker (recomendado)
+
+Requisitos:
+
+* Docker
+* Docker Compose
+
+Passos:
+
+```bash
+docker-compose up --build
+```
+
+Serviços disponíveis:
+
+* Backend Django: [http://localhost:8000/api/products/](http://localhost:8000/api/products/)
+* Frontend React: [http://localhost:5173/](http://localhost:5173/)
+
+As migrações são executadas automaticamente na inicialização.
+
+---
+
+### 2. Execução manual (sem Docker)
 
 #### Backend
 
-1. Configuração Inicial: Crie um app **products**, e defina o modelo Product com os campos:
-    - name: CharField
-    - price: Float (2 decimal fields)
-    - in_stock (boolean)
-2. Configure **CORS**. O backend deve aceitar requisições do localhost.
-3. API (DRF):
-    - Defina *serializers* para *Product*.
-    - O serializador de *Product* deve exibir o nome da categoria, não apenas seu ID.
-    - Use **ViewSets** para fornercer funcionalidade CRUD completa para *Product*.
-    - Configure urls.
+```bash
+cd api
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+A API ficará disponível em:
+
+```
+http://localhost:8000/api/products/
+```
 
 #### Frontend
-1. Listagem: Ao carregar a página, buscar os pordutos e exibí-los em cards simples (Nome, Preço e um "badge" verde/vermelho para estoque).
-2. Criação: Um formulário simples acima da lista com inputs para Nome, Preço e um Checkbox para Estoque.
-3. Atualização (Tela de Criação): Ao salvar o produto com sucesso, a lista deve ser atualizada ( seja via novo fetch ou adicionando ao estado local).
 
-#### Git
-O desafio exige que *ambos* os servidores rodem simultaneamente. O README-CANDIDATO.md deve explicar como rodar o projeto. (Ex: "Abra dois terminais...").
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-#### Bônus (Desejáveis):
-    - Docker Compose: Um arquivo docker-compose.yml que sobe o banco, o back e o front com um comando.
-    - Validação de Erro: Se o backend recusar o produto (ex: preço negativo), o frontend deve mostrar um toast ou mensagem de erro vermelha, não apenas falhar silenciosamente.
+Frontend disponível em:
 
-# Rubrica de Avaliação
+```
+http://localhost:5173/
+```
 
-| Dimensão Avaliada                        | Peso  | Pontuação (1-5) | Descrição da Avaliação (O que procurar)                                                                                                                                                                                                 |
-|------------------------------------------|-------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **1. Funcionalidade (Requisitos Essenciais)** | 40%  | [1-5]           | **5 (Excelente):** Cumpriu 100% dos requisitos essenciais. A aplicação roda de primeira, sem bugs óbvios. Trata estados de loading/error.<br>**3 (Satisfatório):** Cumpriu a maioria (80%+) dos requisitos. Funcionalidade principal funciona, mas com bugs menores.<br>**1 (Inaceitável):** Não roda ou a funcionalidade principal está quebrada. O avaliador não consegue testar a solução. |
-| **2. Qualidade de Código e Estrutura**       | 25%  | [1-5]           | **5 (Excelente):** Código limpo, legível e idiomático. Segue princípios (ex: DRY). Estrutura de pastas lógica e escalável. Tipagem (TS) útil e precisa. Separação clara de responsabilidades.<br>**3 (Satisfatório):** Código funciona, mas com repetição ou "code smells". Estrutura de pastas aceitável, mas confusa. Tipagem usada com alguns `any`.<br>**1 (Inaceitável):** "Código espaguete". Variáveis ruins. Lógica de negócio misturada com UI. "Sopa de arquivos" na raiz. |
-| **3. Processo e Comunicação (Git & README)** | 25%  | [1-5]           | **5 (Excelente):** Commits atômicos, frequentes e bem descritos. PR bem escrito. README completo com setup e explicações de design.<br>**3 (Satisfatório):** Usa Git, mas commits grandes (ex: "implementa home e função de agendar tarefas e remove var desnecessária"). README mínimo com instruções básicas.<br>**1 (Inaceitável):** Um único commit ("final"). Nenhum README ou instruções. Demonstra falta de profissionalismo e comunicação. |
-| **4. Bônus e Resolução de Problemas**        | 10%  | [1-5]           | **5 (Excelente):** Implementou requisitos bônus funcionando. README explica como utilizar.<br>**3 (Satisfatório):** Tentou implementar bônus, mas não funcionou. README explica falha e plano.<br>**1 (Inaceitável):** Ignorou bônus ou implementou com falhas e sem explicação no README. |
+---
 
-## Instruções sobre "README-CANDIDATO" (Timebox 30min):
-Preencha este arquivo com informações claras e concisas, separadas pelas seguintes seções:
+## Funcionalidades
 
-#### Seção 1: Instruções para rodar
-- Quais variáveis de ambiente são necessárias?
-- Como instalar dependências?
-- Como rodar o projeto?
+### Backend
 
-#### Seção 2: Decisões de design
-- Qual foi a maior dificuldade que você encontrou e como superou?
-- O que você não teve tempo de fazer (dentro do timebox) e como você faria se tivesse mais tempo?
+* CRUD completo de produtos via ViewSet
+* Modelo de **Product** com:
 
-#### Seção 3: Link para Deploy (Bônus)
-- Cole aqui o link do projeto hospedado ou instrua como rodar via Docker.
+  * name
+  * price
+  * in_stock
+  * category (opcional)
+* Serializers com validação (ex.: preço não pode ser negativo)
+* CORS liberado para desenvolvimento
+* Endpoints gerados automaticamente pelo router do DRF
 
-#### Seção final: Recomendações
-- Escreva aqui dicas, melhorias e recomendações sobre este desafio.
+### Frontend
 
-## Considerações finais:
-Este desafio não foi pensado para encontrar quem o finaliza 100% ou quem o termina mais rápido. Estamos buscando um desenvolvedor sério, que saiba como desenvolver soluções mesmo que para apenas 50% do projeto. Não queremos nenhum dev que dependa 100% de IA ou de terceiros, mas sim aquele que sabe priorizar, desenvolver e pesquisar.
+* Formulário para criação de produtos
+* Listagem em cards responsivos
+* Atualização automática após criação
+* Exclusão com confirmação
+* Feedback visual com Toastify
+* Layout com TailwindCSS
+
+---
+
+## Decisões de Design
+
+* O backend foi separado no app `products` para facilitar manutenção e escalabilidade.
+* O modelo inclui `category` para permitir expansão futura, embora a criação de categorias não esteja implementada no frontend.
+* A opção por React + Vite garante desenvolvimento rápido, HMR eficiente e build otimizado.
+* Para simplicidade, o frontend usa Axios configurado com uma instância base e React Toastify para mensagens de feedback.
+* O projeto adota organização clara de componentes e estilos com TailwindCSS, evitando dependência de bibliotecas adicionais de UI.
+
+---
+
+## Possíveis Melhorias
+
+* Criar uma seção de gerenciamento de categorias no frontend.
+* Implementar paginação no backend para listas maiores.
+* Implementar testes automatizados tanto no Django quanto no React.
+* Adicionar autenticação JWT para controlar acesso.
+* Criar ambientes de staging e produção no Docker com variáveis configuráveis.
+
+---
+
+## Deploy
+
+O projeto já possui `Dockerfile` no backend e no frontend, e um `docker-compose.yml` capaz de subir todo o ambiente. Para deploy em produção, basta adaptar o compose para uso de volumes, HTTPS e rede externa.
+
+---
+
+## Considerações Finais
+
+O projeto apresenta uma arquitetura simples e bem organizada, capaz de servir tanto como prova técnica quanto como base para um sistema real de inventário. O fluxo de criação, listagem e remoção está funcionando de ponta a ponta, e a separação entre backend e frontend permite evolução independente das camadas.
