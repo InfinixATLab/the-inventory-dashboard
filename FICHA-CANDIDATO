@@ -1,1 +1,79 @@
+1️⃣ Como Rodar o Projeto
 
+Backend (Django)
+
+cd api
+python -m venv venv
+venv\Scripts\activate    # Windows
+pip install -r requisitos.txt
+python manage.py migrate
+python manage.py runserver
+
+Frontend (React + TypeScript + Tailwind)
+
+cd frontend
+npm install
+npm run dev
+
+Backend: http://127.0.0.1:8000
+
+Frontend: http://localhost:3000
+
+Abra o navegador em http://localhost:3000 e veja a aplicação funcionando.
+
+2️⃣ O que foi Implementado
+
+Backend (Django + DRF)
+
+CRUD completo de produtos (Product com nome, preço e estoque)
+
+ViewSet com rotas automáticas (GET, POST, PUT, DELETE)
+
+CORS configurado para o frontend
+
+Frontend (React + TypeScript + Tailwind)
+
+Lista de produtos (ProductCard)
+
+Formulário para adicionar produtos (ProductForm)
+
+Deletar produtos funcionando
+
+Edição simples inline nos cards
+
+Integração com API via Axios
+
+Tipagem com TypeScript
+
+Estilização com Tailwind
+
+3️⃣ Dificuldades e Como Resolvi
+
+Back-end (Python/Django): foi meu maior desafio.
+
+Não entendo muito de Python, então comecei tentando com Node.js e depois pesquisei como compilar/rodar o Django.
+
+Perdi bastante tempo configurando o CRUD e resolvendo erros, principalmente com rotas e CORS.
+
+Tipagem no Frontend: precisei garantir que os tipos coincidissem com os dados do backend.
+
+Auxílio: busquei ajuda na documentação e também usei suporte da IA para entender partes mais complicadas do back-end.
+
+4️⃣ O que Não Foi Feito
+
+Docker/Docker Compose
+
+Validação avançada no frontend
+
+Loading states (spinner)
+
+Mensagens de erro amigáveis
+
+Modal para edição (edição inline só básica)
+
+Testes unitários
+
+5️⃣ Observações Finais
+
+O projeto mostra que consegui integrar front e back, mesmo com pouca experiência em Python, e entregar um CRUD funcional.
+O maior aprendizado foi lidar com o back-end, entender como a API funciona e integrar tudo com o React.
