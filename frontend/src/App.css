@@ -1,42 +1,248 @@
-#root {
-  max-width: 1280px;
+:root {
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --bg-page: #f8fafc;
+  --text-main: #1e293b;
+  --border-color: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+.navbar {
+  background-color: #0f172a;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.navbar-content, .content-wrapper {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0 1.5rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.page-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* --- FORMULÁRIOS --- */
+.main-form-card, .category-form-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-color);
+  margin-bottom: 2rem;
 }
 
-.card {
-  padding: 2em;
+.form-layout {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 
-.read-the-docs {
-  color: #888;
+.cat-form-layout {
+  display: flex;
+  gap: 1rem;
 }
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.flex-grow { flex: 1; min-width: 200px; }
+.price-group { width: 120px; }
+.category-group { width: 180px; }
+
+.input-field {
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.input-field:focus {
+  outline: 2px solid var(--color-primary);
+  border-color: transparent;
+}
+
+/* --- BOTÕES --- */
+.btn-submit {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 42px; 
+}
+
+.btn-submit:hover { background-color: var(--color-primary-hover); }
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* --- CHECKBOX --- */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 10px; 
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  padding-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+  .product-grid { gap: 1rem; }
+  .form-layout { flex-direction: column; align-items: stretch; }
+  .price-group, .category-group { width: 100%; }
+}
+
+/* --- CARD  --- */
+.product-card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  transition: all 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primary);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Botão Lixeira */
+.btn-icon-delete {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-icon-delete:hover {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.stock-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.25rem 0.6rem;
+  border-radius: 99px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stock-badge.in-stock { background-color: #dcfce7; color: #166534; }
+.stock-badge.out-stock { background-color: #fee2e2; color: #991b1b; }
+
+.card-footer {
+  margin-top: auto; 
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  background-color: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.list-title { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+.error-banner { background: #fee2e2; color: #991b1b; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
