@@ -8,8 +8,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 
-class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-
-    queryset = Category.objects.all()
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all().order_by('name')
     serializer_class = CategorySerializer
+
 

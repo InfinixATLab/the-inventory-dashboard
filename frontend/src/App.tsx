@@ -3,6 +3,7 @@ import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 import StatsOverview from './components/StatsOverview';
 import ProductFilters from './components/ProductFilters';
+import CategoryManagerModal from './components/CategoryManagerModal';
 import api from './services/api';
 import type { Product, Category } from './types/Product';
 
@@ -14,6 +15,7 @@ function App() {
 
   // UI state
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
@@ -52,6 +54,31 @@ function App() {
       if (cat) newProduct.category_name = cat.name;
     }
     setProducts((prev) => [newProduct, ...prev]);
+  };
+
+  const handleCategoryCreated = (newCat: Category) => {
+    setCategories((prev) => [...prev, newCat]);
+  };
+
+  const handleCategoryUpdated = (updatedCat: Category) => {
+    setCategories((prev) =>
+      prev.map((c) => (c.id === updatedCat.id ? updatedCat : c))
+    );
+    // Atualizar os nomes nas referências locais dos produtos
+    setProducts((prev) =>
+      prev.map((p) =>
+        Number(p.category) === updatedCat.id
+          ? { ...p, category_name: updatedCat.name }
+          : p
+      )
+    );
+  };
+
+  const handleCategoryDeleted = (deletedId: number) => {
+    setCategories((prev) => prev.filter((c) => c.id !== deletedId));
+    if (selectedCategory === String(deletedId)) {
+      setSelectedCategory('');
+    }
   };
 
   const handleDeleteProduct = async (id: number) => {
@@ -129,6 +156,13 @@ function App() {
 
             <div className="flex items-center gap-3">
               <button
+                onClick={() => setIsCategoryModalOpen(true)}
+                className="inline-flex items-center gap-2 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-purple-300 hover:text-white bg-purple-950/50 hover:bg-purple-900/60 border border-purple-800/60 rounded-xl transition-all shadow-sm"
+              >
+                🏷️ <span>Categorias</span>
+              </button>
+
+              <button
                 onClick={() => setIsFormOpen((prev) => !prev)}
                 className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 active:scale-95 rounded-xl shadow-lg shadow-indigo-600/30 transition-all border border-indigo-400/30"
               >
@@ -163,6 +197,17 @@ function App() {
           categories={categories}
           isOpen={isFormOpen}
           onToggleOpen={() => setIsFormOpen((prev) => !prev)}
+          onOpenCategoryManager={() => setIsCategoryModalOpen(true)}
+        />
+
+        {/* Modal de Gerenciamento de Categorias */}
+        <CategoryManagerModal
+          isOpen={isCategoryModalOpen}
+          onClose={() => setIsCategoryModalOpen(false)}
+          categories={categories}
+          onCategoryCreated={handleCategoryCreated}
+          onCategoryUpdated={handleCategoryUpdated}
+          onCategoryDeleted={handleCategoryDeleted}
         />
 
         {/* Barra de Filtros e Busca */}

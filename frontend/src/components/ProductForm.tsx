@@ -7,6 +7,7 @@ interface ProductFormProps {
   categories: Category[];
   isOpen: boolean;
   onToggleOpen: () => void;
+  onOpenCategoryManager?: () => void;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
@@ -14,6 +15,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   categories,
   isOpen,
   onToggleOpen,
+  onOpenCategoryManager,
 }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -176,9 +178,20 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
             {/* Categoria */}
             <div className="md:col-span-3 space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                Categoria <span className="text-rose-400">*</span>
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                  Categoria <span className="text-rose-400">*</span>
+                </label>
+                {onOpenCategoryManager && (
+                  <button
+                    type="button"
+                    onClick={onOpenCategoryManager}
+                    className="text-[11px] font-semibold text-purple-400 hover:text-purple-300 underline transition-colors"
+                  >
+                    Gerenciar
+                  </button>
+                )}
+              </div>
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
