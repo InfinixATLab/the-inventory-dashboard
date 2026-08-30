@@ -1,66 +1,149 @@
-# THE INVENTORY DASHBOARD
+# 📦 THE INVENTORY DASHBOARD
 
-#### Seção 1: Instruções para rodar
-Não são necessárias variáveis de ambiente para a execução local.
+> Sistema moderno e responsivo para controle de inventário e gestão de produtos com métricas em tempo real, filtros avançados e interface intuitiva.
 
-**Opção 1: Rodando Localmente (Sem Docker)**
+## 📝 Sobre o Projeto
 
-1.  **Instalar Dependências:**
-    *   **Backend (API):** Navegue até a pasta `api` e instale as dependências Python.
-        ```bash
-        cd api
-        pip install -r requirements.txt
-        ```
-    *   **Frontend:** Navegue até a pasta `frontend` e instale as dependências Node.js.
-        ```bash
-        cd frontend
-        npm install
-        ```
+O **The Inventory Dashboard** é uma aplicação full-stack desenvolvida para facilitar a gestão e o monitoramento de produtos em estoque. A plataforma oferece uma interface dinâmica e moderna construída com React 19, Tailwind CSS e TypeScript no frontend, conectada a uma API REST robusta e escalável em Python com Django e Django REST Framework.
 
-2.  **Rodar o Projeto:**
-    *   **Backend (API):** Na pasta `api`, aplique as migrações e inicie o servidor Django.
-        ```bash
-        # Dentro da pasta /api
-        python manage.py migrate
-        python manage.py runserver
-        ```
-        O backend estará disponível em `http://localhost:8000`. Mantenha esse terminal aberto.
+O projeto visa entregar alta usabilidade com métricas calculadas em tempo real, visualização adaptável em grade ou tabela, além de suporte completo à gestão de categorias e controle de disponibilidade de produtos.
 
-    *   **Frontend:** Abra um novo terminal, vá para a pasta `frontend` e inicie o servidor de desenvolvimento Vite.
-        ```bash
-        # Dentro da pasta /frontend
-        npm run dev
-        ```
-        O frontend estará disponível em `http://localhost:5173`.
+## 🖼️ Preview
 
-#### Seção 2: Decisões de design
-*   **Qual foi a maior dificuldade que você encontrou e como superou?**
-    A principal dificuldade foi a integração full-stack para a funcionalidade de "Categorias", especialmente por ser um primeiro contato mais aprofundado com Django/DRF. Superei isso dividindo o problema: primeiro, foquei em criar o endpoint da API no backend para expor as categorias. Em seguida, no frontend, implementei a chamada a essa API com `useEffect` para buscar os dados e popular dinamicamente o campo de seleção no formulário, garantindo a comunicação correta entre as duas partes da aplicação.
+<img src="./frontend/public/projeto.gif" alt="Demonstração do App" />
 
-*   **O que você não teve tempo de fazer e como você faria se tivesse mais tempo?**
-    Dado o tempo, foquei no fluxo principal de criação e listagem. Com mais tempo, eu implementaria:
-    1. **Deploy:**  Não deu tempo de fazer o deploy, comecei a fazer o backend pelo render, mas acabou não dando tempo.
-    2.  **Edição e Exclusão de Produtos:** Adicionaria botões de "Editar" e "Excluir" em cada card de produto, criando os respectivos modais/páginas e endpoints na API para as operações de `UPDATE` e `DELETE`.
-    3.  **Validação de Formulário Avançada:** Substituiria a validação manual por uma biblioteca como `Zod` ou `React Hook Form` para fornecer feedback de erro por campo e regras mais complexas (ex: preço mínimo).
-    4.  **Feedback ao Usuário (Toasts):** Integraria uma biblioteca como `react-toastify` para exibir notificações de sucesso ou erro de forma mais elegante após o envio do formulário, em vez de apenas texto estático.
-    4.  **Paginação:** Na listagem de produtos, implementaria a paginação no backend (usando a paginação do Django REST Framework) e no frontend para lidar com grandes volumes de dados de forma eficiente.
+## ✨ Funcionalidades
 
-#### Seção 3: Link para Deploy (Bônus)
-O projeto está totalmente containerizado com Docker, facilitando a execução em qualquer ambiente.
+- 📊 **Dashboard com Métricas em Tempo Real (KPIs):**
+  - Total de produtos cadastrados e categorias ativas.
+  - Cálculo automático do valor total do inventário em moeda local (BRL).
+  - Contagem de itens em estoque com barra de progresso proporcional.
+  - Alerta de itens sem estoque.
+- 📦 **Gestão Completa de Produtos:**
+  - Cadastro rápido de produtos (Nome, Categoria, Preço e Status de Estoque).
+  - Listagem com modos de visualização em **Cards (Grid)** ou **Tabela Detalhada**.
+  - Exclusão de produtos com confirmação e feedback de loading.
+  - Formatação monetária padronizada (BRL).
+- 🏷️ **Gerenciamento de Categorias:**
+  - Modal dedicado para criação, edição e exclusão de categorias.
+  - Atualização em tempo real das categorias vinculadas aos produtos.
+- 🔍 **Busca, Filtros e Ordenação Avançados:**
+  - Busca textual instantânea por nome do item.
+  - Filtragem por categoria.
+  - Filtragem por disponibilidade (Todos, Em Estoque, Sem Estoque).
+  - Ordenação dinâmica por mais recentes, nome e preço (menor/maior).
+- 🎨 **Interface Moderna & Responsiva:**
+  - Tema escuro sofisticado com efeitos de *glassmorphism* e gradientes.
+  - Layout 100% responsivo para dispositivos móveis, tablets e desktops.
 
-**Opção 2: Rodando com Docker**
+## 🛠️ Tecnologias Utilizadas
 
-1.  **Pré-requisito:** Ter o Docker e o Docker Compose instalados.
+### **Frontend**
+- **[React 19](https://react.dev/):** Biblioteca para interfaces de usuário modernas e reativas.
+- **[TypeScript](https://www.typescriptlang.org/):** Tipagem estática para robustez e manutenibilidade do código.
+- **[Vite](https://vitejs.dev/):** Ferramenta de build ultrarrápida e servidor de desenvolvimento.
+- **[Tailwind CSS v4](https://tailwindcss.com/):** Framework utilitário moderno para estilização ágil e consistente.
+- **[Axios](https://axios-http.com/):** Cliente HTTP para integração com a API REST.
 
-2.  **Rodar com Docker Compose:** No terminal, na raiz do projeto, execute o comando:
-    ```bash
-    docker-compose up --build
-    ```
-    O Docker irá construir as imagens e iniciar os contêineres. O frontend estará acessível em `http://localhost:5173` e o backend em `http://localhost:8000`.
+### **Backend**
+- **[Python 3](https://www.python.org/):** Linguagem base do backend.
+- **[Django](https://www.djangoproject.com/):** Framework web completo e seguro.
+- **[Django REST Framework (DRF)](https://www.django-rest-framework.org/):** Criação de APIs RESTful e serialização de dados.
+- **[django-cors-headers](https://github.com/adamchainz/django-cors-headers):** Gerenciamento de políticas de CORS.
+- **[SQLite / PostgreSQL](https://www.postgresql.org/):** Banco de dados relacional (SQLite por padrão para desenvolvimento, compatível com PostgreSQL).
 
-#### Seção final: Recomendações
-Este é um excelente desafio para avaliar habilidades full-stack em um contexto prático. Algumas sugestões para futuras versões:
+### **DevOps & Ferramentas**
+- **[Docker & Docker Compose](https://www.docker.com/):** Containerização de todos os serviços para ambiente padronizado.
+- **[Gunicorn & WhiteNoise](https://whitenoise.readthedocs.io/):** Servidor WSGI e servir arquivos estáticos prontos para deploy.
 
-*   **Testes:** Incluir um requisito para a escrita de testes unitários (ex: para um helper de formatação no frontend ou para um `serializer` no backend) e/ou testes de integração (ex: testar a criação de um produto via API) para avaliar a qualidade e a robustez do código.
-*   **Complexidade do Modelo:** Adicionar um relacionamento `ManyToMany` (ex: `Tags`) ao modelo `Product` para testar o conhecimento do candidato em cenários de dados mais complexos.
-*   **Clareza nos Requisitos:** Para funcionalidades que envolvem relacionamentos entre dados (como Produtos e Categorias), seria útil detalhar um pouco mais os endpoints de API esperados ou fornecer um mini-diagrama do modelo de dados. Isso ajudaria a alinhar as expectativas sobre a implementação.
+## 🚀 Como Executar o Projeto
+
+Você pode executar o projeto de duas formas: utilizando **Docker** (recomendado) ou instalando as dependências **localmente**.
+
+### Pré-requisitos
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) (versão 18+) e `npm` *(para execução local)*
+- [Python](https://www.python.org/) (versão 3.10+) e `pip` *(para execução local)*
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) *(para execução com Docker)*
+
+### Opção 1: Rodando com Docker (Recomendado) 🐳
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/SEU_USUARIO/the-inventory-dashboard.git
+   cd the-inventory-dashboard
+   ```
+
+2. **Inicie os serviços com Docker Compose:**
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **Acesse as aplicações:**
+   - **Frontend:** [http://localhost:5173](http://localhost:5173)
+   - **Backend API:** [http://localhost:8000/api/](http://localhost:8000/api/)
+
+### Opção 2: Rodando Localmente (Sem Docker) 💻
+
+#### 1. Backend (Django / API)
+
+1. Abra um terminal e navegue até o diretório `api`:
+   ```bash
+   cd api
+   ```
+
+2. Crie e ative um ambiente virtual (recomendado):
+   ```bash
+   # Windows (PowerShell)
+   python -m venv venv
+   .\venv\Scripts\activate
+
+   # Linux/macOS
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. Instale as dependências:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Execute as migrações do banco de dados:
+   ```bash
+   python manage.py migrate
+   ```
+
+5. Inicie o servidor da API:
+   ```bash
+   python manage.py runserver
+   ```
+   > A API estará disponível em `http://localhost:8000`.
+
+#### 2. Frontend (React / Vite)
+
+1. Abra um **segundo terminal** e navegue até a pasta `frontend`:
+   ```bash
+   cd frontend
+   ```
+
+2. Instale os pacotes npm:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento Vite:
+   ```bash
+   npm run dev
+   ```
+   > O frontend estará acessível em `http://localhost:5173`.
+
+## 📌 Decisões de Design e Aprendizados
+
+- **Integração Full-Stack e Relacionamento de Dados:**
+  A integração entre as entidades `Category` e `Product` exigiu sincronização cuidadosa entre o DRF e o estado local no React, garantindo que atualizações de categoria refletissem de forma imediata nos produtos listados.
+- **Interface e Experiência do Usuário (UX):**
+  Foco em feedback instantâneo com estados de carregamento, alternância dinâmica de visualização (cards/tabela) e painéis de estatísticas dinâmicas que recalculam KPIs sem requisições adicionais desnecessárias.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Sinta-se livre para utilizá-lo e customizá-lo.
